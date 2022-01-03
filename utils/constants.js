@@ -70,6 +70,12 @@ const USER_SECURE_TOKEN = DEVELOPMENT_MODE
   ? 'secret_development_token'
   : 'secret_production_token';
 
+const SCREENS_ROUTES = {
+  login: 'Login',
+  home: 'Home',
+  Maintenance: 'Maintenance',
+};
+
 export {
   DEVICE,
   COLORS,
@@ -80,4 +86,5 @@ export {
   BOOKING_STATUS,
   USER_DATA_TOKEN,
   USER_SECURE_TOKEN,
+  SCREENS_ROUTES,
 };
