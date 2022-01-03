@@ -36,6 +36,7 @@ const COLORS = {
   greyOpacity: '#DDDDDD',
   boldText: '#1E2D3E',
   regText: '#2E2E2EBF',
+  greyButton: '#F1F6F7',
 };
 
 const BOOKING_STATUS = {
