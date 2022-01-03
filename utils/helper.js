@@ -1,5 +1,5 @@
 import { showMessage } from 'react-native-flash-message';
-import { DEVICE } from './constants';
+import { DEVELOPMENT_MODE, DEVICE } from './constants';
 import { deleteItemAsync, deleteSecureToken } from '../store';
 
 const handleAPIError = async (error, message) => {
@@ -15,10 +15,14 @@ const handleAPIError = async (error, message) => {
     icon: 'warning',
   });
 };
+const clgFun = value => {
+  // eslint-disable-next-line no-console
+  DEVELOPMENT_MODE ? console.log(value) : true;
+};
 
 /// ///////// logout from App
 const handleLogout = async () => {
-  console.log('***** Logging Out ******');
+  clgFun('***** Logging Out ******');
   // await get.logout();
   await deleteItemAsync();
   await deleteItemAsync('notificationToken');
@@ -28,4 +32,4 @@ const handleLogout = async () => {
 const deviceCondition = (androidValue, iosValue) =>
   DEVICE.platform === 'android' ? androidValue : iosValue;
 
-export { handleAPIError, handleLogout, deviceCondition };
+export { handleAPIError, handleLogout, deviceCondition, clgFun };
