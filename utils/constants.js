@@ -1,11 +1,11 @@
-import {Platform, Dimensions, StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Platform, Dimensions, StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   widthPercentageToDP as widthP,
   heightPercentageToDP as heightP,
 } from 'react-native-responsive-screen';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const DEVICE = {
   // device type ios or android

@@ -1,10 +1,10 @@
-import {showMessage} from 'react-native-flash-message';
-import {DEVICE} from './constants';
-import {deleteItemAsync, deleteToken} from '../store';
+import { showMessage } from 'react-native-flash-message';
+import { DEVICE } from './constants';
+import { deleteItemAsync, deleteSecureToken } from '../store';
 
-const handleAPIError = async (error, message, type) => {
+const handleAPIError = async (error, message) => {
   const errorMessage = error?.response?.data?.status || {
-    message: message,
+    message,
   };
 
   showMessage({
@@ -22,10 +22,10 @@ const handleLogout = async () => {
   // await get.logout();
   await deleteItemAsync();
   await deleteItemAsync('notificationToken');
-  await deleteToken();
+  await deleteSecureToken();
 };
 
 const deviceCondition = (androidValue, iosValue) =>
   DEVICE.platform === 'android' ? androidValue : iosValue;
 
-export {handleAPIError, handleLogout, deviceCondition};
+export { handleAPIError, handleLogout, deviceCondition };
