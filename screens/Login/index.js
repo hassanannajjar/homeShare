@@ -4,12 +4,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Button, Typography, TextInput } from '../../components';
-import { COLORS, DEVICE } from '../../utils/constants';
+import { COLORS, DEVICE, SCREENS_ROUTES } from '../../utils/constants';
 import { splash } from '../../assets/images';
 import { Password, EmailAddress, Google } from '../../assets/icons';
 import styles from './style';
 
-const LoginScreen = () => (
+const LoginScreen = ({ navigation }) => (
   <KeyboardAwareScrollView style={{ height: DEVICE.height }}>
     <View style={styles.container}>
       <Image
@@ -57,7 +57,11 @@ const LoginScreen = () => (
           height: '20%',
           justifyContent: 'space-between',
         }}>
-        <Button title="Login" titleStyle={{ fontWeight: 'bold' }} />
+        <Button
+          title="Login"
+          titleStyle={{ fontWeight: 'bold' }}
+          onPress={() => navigation.navigate(SCREENS_ROUTES.Maintenance)}
+        />
         <View
           style={{
             flexDirection: 'row',
@@ -90,6 +94,7 @@ const LoginScreen = () => (
           titleStyle={{ fontWeight: 'bold', color: COLORS.secondGrey }}
           style={{ backgroundColor: COLORS.greyButton }}
           Icon={Google}
+          onPress={() => navigation.navigate(SCREENS_ROUTES.Maintenance)}
         />
       </View>
       <View
