@@ -7,7 +7,7 @@ import MapComponent from './MapComponent';
 import styles from './style';
 
 const MaintenanceScreen = ({ navigation }) => {
-  const [selectedScreen, setSelectedScreen] = useState(1);
+  const [selectedScreen, setSelectedScreen] = useState(0);
   return (
     <>
       <MaintenanceHeader
