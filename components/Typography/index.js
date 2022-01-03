@@ -31,9 +31,9 @@ const Typography = ({
     <Text
       style={[
         {
-          fontFamily: bold,
           textAlign: align,
           fontSize: RFValue(14),
+          fontWeight: bold ? 'bold' : 'normal',
         },
         color && { color },
         width && { width },

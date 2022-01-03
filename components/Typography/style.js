@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   h6Style: { fontSize: RFValue(11) },
   simpleText: { fontSize: RFValue(25) },
   inputStyle: { fontSize: RFValue(14) },
-  buttonStyle: { fontSize: RFValue(13) },
+  buttonStyle: { fontSize: RFValue(15) },
 });
 
 export default styles;
