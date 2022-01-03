@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { COLORS, DEVICE } from '../../utils/constants';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'space-evenly',
+    height: DEVICE.height,
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: '10%',
+    backgroundColor: COLORS.white,
   },
 });
 
