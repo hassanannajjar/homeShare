@@ -24,6 +24,7 @@
     "react-native-responsive-fontsize": "^0.5.1",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
+    "react-native-svg": "^12.1.1",
     "react-navigation": "^4.4.4"
   },
   "devDependencies": {
