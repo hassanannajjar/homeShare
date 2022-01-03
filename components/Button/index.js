@@ -5,10 +5,18 @@ import { COLORS } from '../../utils/constants';
 import Typography from '../Typography';
 import styles from './style';
 
-const Button = ({ title, style, content, onPress, Icon, disabled }) => (
+const Button = ({
+  title,
+  titleStyle,
+  style,
+  content,
+  onPress,
+  Icon,
+  disabled,
+}) => (
   <TouchableOpacity
     // the opacity when click btn
-    activeOpacity={0.7}
+    activeOpacity={0.5}
     style={[
       styles.buttonContainer,
       {
@@ -26,7 +34,7 @@ const Button = ({ title, style, content, onPress, Icon, disabled }) => (
     {Icon && <Icon />}
     {/* this text well handle in deferent style if it shown in my orders screen  */}
     {title && (
-      <Typography button color="white">
+      <Typography style={titleStyle} button color="white">
         {title}
       </Typography>
     )}
