@@ -22,21 +22,20 @@ const DEVICE = {
 
 // Colors in all screens
 const COLORS = {
-  primary: '#A3090F',
-  secondary: '#1D2029',
+  primary: '#00C896',
+  secondary: '#35495D',
   white: '#FFFFFF',
-  grey: '#8F94A2',
+  firstGrey: '#333333',
+  secondGrey: '#4F4F4F',
+  thirdGrey: '#828282',
   blue: '#2957A4',
   yellow: '#FFDF5A',
   black: '#000000',
   lightBlue: '#748A9D',
   SearchBar: '#00000008',
-  blur: '#D18487',
-  greyOpacity: '#4A4A4A',
-  greyGround: '#F7F7F7',
+  greyOpacity: '#DDDDDD',
   boldText: '#1E2D3E',
   regText: '#2E2E2EBF',
-  green: 'green',
 };
 
 const BOOKING_STATUS = {
