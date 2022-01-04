@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Back } from '../../assets/icons';
 import { Typography } from '../../components';
 import { COLORS } from '../../utils/constants';
@@ -13,7 +13,6 @@ const MaintenanceHeader = ({
   navigation,
 }) => (
   <View style={styles.header}>
-    <StatusBar backgroundColor="#FFFFFF00" barStyle="dark-content" />
     <View
       style={{
         flexDirection: 'row',

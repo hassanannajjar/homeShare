@@ -8,11 +8,11 @@ import {
   Search,
 } from '../../assets/icons';
 import { TextInput, Typography } from '../../components';
-import { COLORS } from '../../utils/constants';
+import { COLORS, SCREENS_ROUTES } from '../../utils/constants';
 
 import styles from './style';
 
-const MaintenanceItems = () => {
+const MaintenanceItems = ({ navigation }) => {
   const mainItems = [
     {
       title: 'Marcus Schleifer',
@@ -63,8 +63,10 @@ const MaintenanceItems = () => {
     </View>
   );
 
-  const IconItem = ({ title, icon }) => (
-    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+  const IconItem = ({ title, icon, onPress }) => (
+    <TouchableOpacity
+      style={{ flexDirection: 'row', alignItems: 'center' }}
+      onPress={onPress}>
       {icon}
       <Typography h6 color={COLORS.secondGrey} style={{ marginLeft: '4%' }}>
         {title}
@@ -137,9 +139,17 @@ const MaintenanceItems = () => {
             alignItems: 'center',
             height: '25%',
           }}>
-          <IconItem title="Download Pdf" icon={<DownloadPdf />} />
-          <IconItem title="Assign Issue" icon={<Assign />} />
-          <IconItem title="Close Issue" icon={<Close />} />
+          <IconItem
+            title="Download Pdf"
+            icon={<DownloadPdf />}
+            onPress={() => {}}
+          />
+          <IconItem
+            title="Assign Issue"
+            icon={<Assign />}
+            onPress={() => navigation.navigate(SCREENS_ROUTES.completeAssign)}
+          />
+          <IconItem title="Close Issue" icon={<Close />} onPress={() => {}} />
         </View>
       </View>
     );
