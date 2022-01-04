@@ -73,7 +73,8 @@ const USER_SECURE_TOKEN = DEVELOPMENT_MODE
 const SCREENS_ROUTES = {
   login: 'Login',
   home: 'Home',
-  Maintenance: 'Maintenance',
+  maintenance: 'Maintenance',
+  completeAssign: 'CompleteAssign',
 };
 
 export {

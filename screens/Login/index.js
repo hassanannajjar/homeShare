@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => (
         <Button
           title="Login"
           titleStyle={{ fontWeight: 'bold' }}
-          onPress={() => navigation.navigate(SCREENS_ROUTES.Maintenance)}
+          onPress={() => navigation.navigate(SCREENS_ROUTES.maintenance)}
         />
         <View
           style={{
@@ -94,7 +94,7 @@ const LoginScreen = ({ navigation }) => (
           titleStyle={{ fontWeight: 'bold', color: COLORS.secondGrey }}
           style={{ backgroundColor: COLORS.greyButton }}
           Icon={Google}
-          onPress={() => navigation.navigate(SCREENS_ROUTES.Maintenance)}
+          onPress={() => navigation.navigate(SCREENS_ROUTES.maintenance)}
         />
       </View>
       <View
