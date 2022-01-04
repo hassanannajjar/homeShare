@@ -1,7 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { HomeScreen, LoginScreen, MaintenanceScreen } from './screens';
+import {
+  CompleteAssignScreen,
+  HomeScreen,
+  LoginScreen,
+  MaintenanceScreen,
+} from './screens';
 import { SCREENS_ROUTES } from './utils/constants';
 
 const Stack = createStackNavigator();
@@ -12,8 +17,12 @@ const Routes = ({ user }) => (
       <>
         <Stack.Screen name={SCREENS_ROUTES.login} component={LoginScreen} />
         <Stack.Screen
-          name={SCREENS_ROUTES.Maintenance}
+          name={SCREENS_ROUTES.maintenance}
           component={MaintenanceScreen}
+        />
+        <Stack.Screen
+          name={SCREENS_ROUTES.completeAssign}
+          component={CompleteAssignScreen}
         />
       </>
     ) : (
