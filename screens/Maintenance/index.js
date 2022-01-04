@@ -16,7 +16,11 @@ const MaintenanceScreen = ({ navigation }) => {
         navigation={navigation}
       />
       <View style={styles.container}>
-        {selectedScreen === 0 ? <MapComponent /> : <MaintenanceItems />}
+        {selectedScreen === 0 ? (
+          <MapComponent />
+        ) : (
+          <MaintenanceItems navigation={navigation} />
+        )}
       </View>
     </>
   );

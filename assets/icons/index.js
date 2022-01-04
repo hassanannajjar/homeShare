@@ -9,6 +9,7 @@ import Assign from './Assign';
 import Close from './Close';
 import DownloadPdf from './DownloadPdf';
 import Search from './Search';
+import BackDrop from './BackDrop';
 
 export {
   EmailAddress,
@@ -22,4 +23,5 @@ export {
   Close,
   DownloadPdf,
   Search,
+  BackDrop,
 };
