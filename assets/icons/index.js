@@ -10,6 +10,10 @@ import Close from './Close';
 import DownloadPdf from './DownloadPdf';
 import Search from './Search';
 import BackDrop from './BackDrop';
+import TimeIcon from './TimeIcon';
+import AcceptIcon from './AcceptIcon';
+import UploadIcon from './UploadIcon';
+import Info from './Info';
 
 export {
   EmailAddress,
@@ -24,4 +28,8 @@ export {
   DownloadPdf,
   Search,
   BackDrop,
+  TimeIcon,
+  AcceptIcon,
+  UploadIcon,
+  Info,
 };
