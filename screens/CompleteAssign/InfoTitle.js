@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { Info } from '../../assets/icons';
 import { Typography } from '../../components';
-import styles from '../../components/Typography/style';
 import { COLORS } from '../../utils/constants';
+import styles from './style';
 
 const InfoTitle = ({ title }) => (
   <View style={styles.infoTitle}>
