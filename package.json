@@ -8,6 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
+    "apk": "cd android && ./gradlew assembleRelease",
+    "aab": "cd android && ./gradlew bundleRelease",
+    "pod": "cd ios && pod install",
+    "cleanPod": "cd ios && rm -rf Pods &&  pod install --repo-update",
     "create": "iconset create ./assets/images/logo.png"
   },
   "dependencies": {
