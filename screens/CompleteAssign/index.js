@@ -1,16 +1,9 @@
 import moment from 'moment';
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  BackDrop,
-  UploadIcon,
-  Info,
-  TimeIcon,
-  AcceptIcon,
-  Close,
-} from '../../assets/icons';
+
+import { BackDrop, TimeIcon } from '../../assets/icons';
 import {
   Button,
   CommonBottomSheet,
@@ -18,11 +11,16 @@ import {
   TextInput,
   Typography,
 } from '../../components';
-import { COLORS, DEVICE } from '../../utils/constants';
 import CompleteAssignHeader from './CompleteAssignHeader';
-import LabelText from './LabelText';
+import ConfirmConditions from './ConfirmConditions';
+import DropDownInput from './DropDownInput';
+import FormTitle from './FormTitle';
+import InfoTitle from './InfoTitle';
+import ListItem from './ListItem';
 
 import styles from './style';
+import UploadedImage from './UploadedImage';
+import UploadImageComponent from './UploadImageComponent';
 
 const CompleteAssignScreen = ({ navigation }) => {
   const [isVisible, setVisible] = useState(false);
@@ -48,191 +46,12 @@ const CompleteAssignScreen = ({ navigation }) => {
 
   const status = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
 
-  const options = {
-    title: 'Select Image',
-    customButtons: [
-      { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-    ],
-    storageOptions: {
-      skipBackup: true,
-      path: 'images',
-    },
-  };
-
-  const ListItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        if (isVisible === 'property') {
-          setSelectedValue(item);
-        } else {
-          setSelectedStatus(item);
-        }
-        setVisible(false);
-      }}
-      style={styles.bottomSheetItem}>
-      <Typography h6 bold color={COLORS.secondGrey}>
-        {item}
-      </Typography>
-    </TouchableOpacity>
-  );
-
-  const DropDownInput = ({
-    label,
-    value,
-    style,
-    containerStyle,
-    icon,
-    onPress,
-    placeHolder = '',
-    children,
-  }) => (
-    <View style={[styles.dropContainer, containerStyle]}>
-      <LabelText text={label} />
-      {children || (
-        <TouchableOpacity
-          onPress={onPress}
-          style={[styles.dropDownInput, style]}>
-          <Typography h6 color={COLORS[value ? 'secondGrey' : 'grey']}>
-            {value || placeHolder}
-          </Typography>
-          {icon}
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-
-  const FormTitle = ({ title }) => (
-    <Typography
-      h4
-      color={COLORS.secondGrey}
-      bold
-      style={{ marginVertical: '4%' }}>
-      {title}
-    </Typography>
-  );
-
-  const InfoTitle = ({ title }) => (
-    <View
-      style={{
-        backgroundColor: '#2195F313',
-        borderRadius: 5,
-        paddingHorizontal: '2%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: '3%',
-        justifyContent: 'space-around',
-        width: '100%',
-      }}>
-      <Info />
-      <Typography
-        h5
-        color={COLORS.secondary}
-        style={{ marginLeft: '2%', width: '90%' }}>
-        {title}
-      </Typography>
-    </View>
-  );
-
-  const UploadImageComponent = ({ isFirst }) => (
-    <TouchableOpacity
-      onPress={async () => {
-        await launchImageLibrary(options, response => {
-          const uri = response?.assets[0]?.uri;
-          if (response.didCancel) {
-            // console.log('User cancelled image picker');
-          } else if (response.error) {
-            // console.log('ImagePicker Error: ', response.error);
-          } else {
-            // const source = { uri: response.uri };
-
-            // You can also display the image using data:
-
-            setSelectedImages(lastImages => ({
-              ...lastImages,
-              ...(isFirst ? { first: uri } : { second: uri }),
-            }));
-          }
-        });
-      }}
-      style={{
-        borderColor: COLORS.primary,
-        borderWidth: 1,
-        borderRadius: 5,
-        width: '100%',
-        flexDirection: 'row',
-        paddingVertical: '3%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: '3%',
-      }}>
-      <UploadIcon />
-      <Typography h5 color={COLORS.primary} style={{ marginLeft: '2%' }}>
-        UPLOAD PICTURE
-      </Typography>
-    </TouchableOpacity>
-  );
-
-  const ConfirmConditions = () => (
-    <View style={{ flexDirection: 'row', marginVertical: '2%' }}>
-      <TouchableOpacity onPress={() => setAccept(!isAccept)}>
-        <AcceptIcon isAccepted={isAccept} />
-      </TouchableOpacity>
-      <Typography h5 style={{ marginLeft: '2%' }}>
-        I confirm I filled everything based on the reality
-      </Typography>
-    </View>
-  );
-
-  const UploadedImage = ({ value, isFirst }) =>
-    value !== '' ? (
-      <View
-        style={{
-          borderColor: 'grey',
-          borderWidth: 1,
-          borderRadius: 5,
-          alignSelf: 'center',
-        }}>
-        <Image
-          source={{ uri: value }}
-          resizeMode="cover"
-          style={{
-            width: DEVICE.width * 0.3,
-            height: DEVICE.width * 0.3,
-            borderRadius: 4,
-          }}
-        />
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            setSelectedImages(lastImages => ({
-              ...lastImages,
-              ...(isFirst ? { first: '' } : { second: '' }),
-            }));
-          }}
-          style={{
-            position: 'absolute',
-            top: -5,
-            right: -5,
-            backgroundColor: 'grey',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: DEVICE.width * 0.06,
-            height: DEVICE.width * 0.06,
-            borderRadius: 20,
-          }}>
-          <Close />
-        </TouchableOpacity>
-      </View>
-    ) : (
-      <View />
-    );
-
   return (
     <>
       {/* header component */}
       <CompleteAssignHeader navigation={navigation} />
 
-      <KeyboardAwareScrollView style={{ height: DEVICE.height }}>
+      <KeyboardAwareScrollView style={styles.keyboardVoiding}>
         {/* form items  */}
         <View style={styles.container}>
           <DropDownInput
@@ -269,46 +88,47 @@ const CompleteAssignScreen = ({ navigation }) => {
           {/* First Step */}
           <FormTitle title="First Step" />
           <InfoTitle
-            title="You must upload a pictue(or more than one) of the issue before starting
+            title="You must upload a picture(or more than one) of the issue before starting
         to fix it."
           />
-          <UploadImageComponent isFirst />
-          <UploadedImage value={selectedImages.first} isFirst />
+          <UploadImageComponent
+            onSuccess={uri => {
+              setSelectedImages(lastImages => ({
+                ...lastImages,
+                first: uri,
+              }));
+            }}
+          />
+          <UploadedImage
+            value={selectedImages.first}
+            onPressRemove={() =>
+              setSelectedImages(lastImages => ({
+                ...lastImages,
+                first: '',
+              }))
+            }
+          />
+
+          {/* Second Step */}
           <FormTitle title="Second Step" />
+          {/* textArea */}
           <DropDownInput
             label="Complete Information"
-            containerStyle={{ height: DEVICE.height * 0.18 }}>
+            containerStyle={styles.textAreaContainer}>
             <TextInput
               placeholder="Description of the solution"
-              style={[
-                styles.dropDownInput,
-                {
-                  borderBottomWidth: 0,
-                  height: DEVICE.height * 0.14,
-                },
-              ]}
+              style={[styles.dropDownInput, styles.textArea]}
               numberOfLines={5}
               multiline
             />
           </DropDownInput>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}>
+          <View style={styles.costStatusContainer}>
             <DropDownInput
               label="Total Costs"
-              containerStyle={{ width: '45%', marginVertical: '3%' }}>
+              containerStyle={styles.costContainer}>
               <TextInput
                 placeholder="Enter Cost"
-                style={[
-                  styles.dropDownInput,
-                  {
-                    borderBottomWidth: 0,
-                    width: '100%',
-                  },
-                ]}
+                style={[styles.dropDownInput, styles.costInput]}
                 number
               />
             </DropDownInput>
@@ -318,22 +138,43 @@ const CompleteAssignScreen = ({ navigation }) => {
               value={selectedStatus}
               icon={<BackDrop />}
               onPress={() => setVisible('status')}
-              containerStyle={{ width: '45%', marginVertical: '3%' }}
-              style={{ width: '100%', paddingLeft: '5%' }}
+              containerStyle={styles.costContainer}
+              style={styles.status}
             />
           </View>
+
           {/* Third Step */}
           <FormTitle title="Third Step" />
           <InfoTitle title="Upload at least one picture of the fixed issue" />
-          <UploadImageComponent />
-          <UploadedImage value={selectedImages.second} />
+          <UploadImageComponent
+            onSuccess={uri => {
+              setSelectedImages(lastImages => ({
+                ...lastImages,
+                second: uri,
+              }));
+            }}
+          />
+          <UploadedImage
+            value={selectedImages.second}
+            onPressRemove={() =>
+              setSelectedImages(lastImages => ({
+                ...lastImages,
+                second: '',
+              }))
+            }
+          />
+
           {/* last Step */}
           <FormTitle title="Last Step" />
           <Typography>Confirm and Submit the form</Typography>
-          <ConfirmConditions />
+          <ConfirmConditions
+            value={isAccept}
+            onPress={() => setAccept(!isAccept)}
+          />
           <Button title="Submit" titleStyle={{ fontWeight: 'bold' }} />
         </View>
       </KeyboardAwareScrollView>
+
       {/* properties list bottom sheet  */}
       <CommonBottomSheet
         isVisible={isVisible}
@@ -343,11 +184,23 @@ const CompleteAssignScreen = ({ navigation }) => {
         }
         okButton={false}>
         {(isVisible === 'property' ? properties : status).map((item, index) => (
-          <ListItem item={item} key={index.toString()} />
+          <ListItem
+            item={item}
+            key={index.toString()}
+            onPress={() => {
+              if (isVisible === 'property') {
+                setSelectedValue(item);
+              } else {
+                setSelectedStatus(item);
+              }
+              setVisible(false);
+            }}
+          />
         ))}
         <View style={{ marginBottom: '4%' }} />
       </CommonBottomSheet>
 
+      {/* date picker bottom sheet  */}
       <DatePicker
         headerTitle={viewDatePicker}
         isVisible={viewDatePicker}
