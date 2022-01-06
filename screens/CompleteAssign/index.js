@@ -1,5 +1,7 @@
+import moment from 'moment';
 import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   BackDrop,
@@ -7,8 +9,15 @@ import {
   Info,
   TimeIcon,
   AcceptIcon,
+  Close,
 } from '../../assets/icons';
-import { Button, CommonBottomSheet, Typography } from '../../components';
+import {
+  Button,
+  CommonBottomSheet,
+  DatePicker,
+  TextInput,
+  Typography,
+} from '../../components';
 import { COLORS, DEVICE } from '../../utils/constants';
 import CompleteAssignHeader from './CompleteAssignHeader';
 import LabelText from './LabelText';
@@ -20,9 +29,15 @@ const CompleteAssignScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState(
     'Baywood House 140, Infirmary Road, Sheffield, S6'
   );
-  const [startDate, setStartDate] = useState('10:30 PM');
-  const [finishDate, setFinishDate] = useState('12:30 PM');
+  const [selectedStatus, setSelectedStatus] = useState();
+  const [startDate, setStartDate] = useState(new Date());
+  const [finishDate, setFinishDate] = useState(new Date());
   const [isAccept, setAccept] = useState(false);
+  const [viewDatePicker, setViewDatePicker] = useState(false);
+  const [selectedImages, setSelectedImages] = useState({
+    first: '',
+    second: '',
+  });
 
   const properties = [
     'Baywood House 140, Infirmary Road, Sheffield, S6',
@@ -31,10 +46,27 @@ const CompleteAssignScreen = ({ navigation }) => {
     'Alex 0, Jelly Road, West London, L52',
   ];
 
+  const status = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
+
+  const options = {
+    title: 'Select Image',
+    customButtons: [
+      { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+    ],
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+
   const ListItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        setSelectedValue(item);
+        if (isVisible === 'property') {
+          setSelectedValue(item);
+        } else {
+          setSelectedStatus(item);
+        }
         setVisible(false);
       }}
       style={styles.bottomSheetItem}>
@@ -51,15 +83,21 @@ const CompleteAssignScreen = ({ navigation }) => {
     containerStyle,
     icon,
     onPress,
+    placeHolder = '',
+    children,
   }) => (
     <View style={[styles.dropContainer, containerStyle]}>
       <LabelText text={label} />
-      <TouchableOpacity onPress={onPress} style={[styles.dropDownInput, style]}>
-        <Typography h6 color={COLORS.secondGrey}>
-          {value}
-        </Typography>
-        {icon}
-      </TouchableOpacity>
+      {children || (
+        <TouchableOpacity
+          onPress={onPress}
+          style={[styles.dropDownInput, style]}>
+          <Typography h6 color={COLORS[value ? 'secondGrey' : 'grey']}>
+            {value || placeHolder}
+          </Typography>
+          {icon}
+        </TouchableOpacity>
+      )}
     </View>
   );
 
@@ -95,8 +133,27 @@ const CompleteAssignScreen = ({ navigation }) => {
     </View>
   );
 
-  const UploadImageComponent = () => (
+  const UploadImageComponent = ({ isFirst }) => (
     <TouchableOpacity
+      onPress={async () => {
+        await launchImageLibrary(options, response => {
+          const uri = response?.assets[0]?.uri;
+          if (response.didCancel) {
+            // console.log('User cancelled image picker');
+          } else if (response.error) {
+            // console.log('ImagePicker Error: ', response.error);
+          } else {
+            // const source = { uri: response.uri };
+
+            // You can also display the image using data:
+
+            setSelectedImages(lastImages => ({
+              ...lastImages,
+              ...(isFirst ? { first: uri } : { second: uri }),
+            }));
+          }
+        });
+      }}
       style={{
         borderColor: COLORS.primary,
         borderWidth: 1,
@@ -126,6 +183,50 @@ const CompleteAssignScreen = ({ navigation }) => {
     </View>
   );
 
+  const UploadedImage = ({ value, isFirst }) =>
+    value !== '' ? (
+      <View
+        style={{
+          borderColor: 'grey',
+          borderWidth: 1,
+          borderRadius: 5,
+          alignSelf: 'center',
+        }}>
+        <Image
+          source={{ uri: value }}
+          resizeMode="cover"
+          style={{
+            width: DEVICE.width * 0.3,
+            height: DEVICE.width * 0.3,
+            borderRadius: 4,
+          }}
+        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            setSelectedImages(lastImages => ({
+              ...lastImages,
+              ...(isFirst ? { first: '' } : { second: '' }),
+            }));
+          }}
+          style={{
+            position: 'absolute',
+            top: -5,
+            right: -5,
+            backgroundColor: 'grey',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: DEVICE.width * 0.06,
+            height: DEVICE.width * 0.06,
+            borderRadius: 20,
+          }}>
+          <Close />
+        </TouchableOpacity>
+      </View>
+    ) : (
+      <View />
+    );
+
   return (
     <>
       {/* header component */}
@@ -138,7 +239,7 @@ const CompleteAssignScreen = ({ navigation }) => {
             label="Select Property"
             value={selectedValue}
             icon={<BackDrop />}
-            onPress={() => setVisible(true)}
+            onPress={() => setVisible('property')}
           />
           <FormTitle title="Timings" />
           <View
@@ -149,17 +250,17 @@ const CompleteAssignScreen = ({ navigation }) => {
             }}>
             <DropDownInput
               label="Start Time"
-              value={startDate}
+              value={startDate && moment(startDate).format('LT')}
               icon={<TimeIcon />}
-              onPress={() => {}}
+              onPress={() => setViewDatePicker('Start Time')}
               containerStyle={{ width: '45%' }}
               style={{ width: '100%', paddingLeft: '5%' }}
             />
             <DropDownInput
               label="Finish Time"
-              value={finishDate}
+              value={finishDate && moment(finishDate).format('LT')}
               icon={<TimeIcon />}
-              onPress={() => {}}
+              onPress={() => setViewDatePicker('Finish Time')}
               containerStyle={{ width: '45%' }}
               style={{ width: '100%', paddingLeft: '5%' }}
             />
@@ -171,14 +272,25 @@ const CompleteAssignScreen = ({ navigation }) => {
             title="You must upload a pictue(or more than one) of the issue before starting
         to fix it."
           />
-          <UploadImageComponent />
+          <UploadImageComponent isFirst />
+          <UploadedImage value={selectedImages.first} isFirst />
           <FormTitle title="Second Step" />
           <DropDownInput
             label="Complete Information"
-            value={selectedValue}
-            icon={<BackDrop />}
-            onPress={() => {}}
-          />
+            containerStyle={{ height: DEVICE.height * 0.18 }}>
+            <TextInput
+              placeholder="Description of the solution"
+              style={[
+                styles.dropDownInput,
+                {
+                  borderBottomWidth: 0,
+                  height: DEVICE.height * 0.14,
+                },
+              ]}
+              numberOfLines={5}
+              multiline
+            />
+          </DropDownInput>
           <View
             style={{
               flexDirection: 'row',
@@ -187,16 +299,25 @@ const CompleteAssignScreen = ({ navigation }) => {
             }}>
             <DropDownInput
               label="Total Costs"
-              value="Enter Cost"
-              onPress={() => {}}
-              containerStyle={{ width: '45%', marginVertical: '3%' }}
-              style={{ width: '100%', paddingLeft: '5%' }}
-            />
+              containerStyle={{ width: '45%', marginVertical: '3%' }}>
+              <TextInput
+                placeholder="Enter Cost"
+                style={[
+                  styles.dropDownInput,
+                  {
+                    borderBottomWidth: 0,
+                    width: '100%',
+                  },
+                ]}
+                number
+              />
+            </DropDownInput>
             <DropDownInput
               label="Status"
-              value="Select Status"
+              placeHolder="Select Status"
+              value={selectedStatus}
               icon={<BackDrop />}
-              onPress={() => {}}
+              onPress={() => setVisible('status')}
               containerStyle={{ width: '45%', marginVertical: '3%' }}
               style={{ width: '100%', paddingLeft: '5%' }}
             />
@@ -205,6 +326,7 @@ const CompleteAssignScreen = ({ navigation }) => {
           <FormTitle title="Third Step" />
           <InfoTitle title="Upload at least one picture of the fixed issue" />
           <UploadImageComponent />
+          <UploadedImage value={selectedImages.second} />
           {/* last Step */}
           <FormTitle title="Last Step" />
           <Typography>Confirm and Submit the form</Typography>
@@ -216,13 +338,23 @@ const CompleteAssignScreen = ({ navigation }) => {
       <CommonBottomSheet
         isVisible={isVisible}
         setVisible={setVisible}
-        headerTitle="Properties"
+        headerTitle={
+          isVisible === 'property' ? 'Select Property' : 'Select Status'
+        }
         okButton={false}>
-        {properties.map((item, index) => (
+        {(isVisible === 'property' ? properties : status).map((item, index) => (
           <ListItem item={item} key={index.toString()} />
         ))}
         <View style={{ marginBottom: '4%' }} />
       </CommonBottomSheet>
+
+      <DatePicker
+        headerTitle={viewDatePicker}
+        isVisible={viewDatePicker}
+        setVisible={setViewDatePicker}
+        setTime={viewDatePicker === 'Start Time' ? setStartDate : setFinishDate}
+        time={viewDatePicker === 'Start Time' ? startDate : finishDate}
+      />
     </>
   );
 };
