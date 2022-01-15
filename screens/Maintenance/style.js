@@ -9,12 +9,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F6F9',
   },
   header: {
-    height: DEVICE.height * 0.1,
+    height: DEVICE.height * 0.12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: COLORS.white,
     ...GLOBAL_STYLE.shadow(5),
+    paddingTop: DEVICE.height * 0.03,
   },
   maintenanceSwitch: {
     width: DEVICE.width * 0.3,

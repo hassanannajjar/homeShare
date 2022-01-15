@@ -51,5 +51,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Home Share Uses the camera for taking profile pictures or use the image to contact with customer support.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Home share app is requesting access to the user’s location information at all times</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is required to find out where you are</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Home Share Uses location for getting user current address to calcuate distance in facilities.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Home Share Uses Photo Library for taking images for profile pictures or use the image to contact with customer support.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Home share Uses the library</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Home share use your location always</string>
 </dict>
 </plist>

@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   header: {
-    height: DEVICE.height * 0.1,
+    height: DEVICE.height * 0.12,
+    paddingTop: DEVICE.height * 0.03,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
